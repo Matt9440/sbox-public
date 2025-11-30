@@ -85,6 +85,11 @@ button.circle
     color: #70788b;
     font-size: 28px;
     padding: 0;
+
+    &:hover 
+    {
+        color: #fff;
+    }
 }
 
 button.circle IconPanel
@@ -97,17 +102,6 @@ button.circle IconPanel
     justify-content: center;
     text-align: center;
 }
-
-ButtonCircle:hover
-{
-    color: #fff;
-
-    > .inner
-    {
-        background-color: #272b34;
-    }
-}
-
 
 menuheader > .container > .links button
 {
