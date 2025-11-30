@@ -86,9 +86,14 @@ button.circle
     font-size: 28px;
     padding: 0;
 
-    &:hover 
+    &:hover
     {
         color: #fff;
+
+        > .inner
+        {
+            background-color: #272b34;
+        }
     }
 }
 
