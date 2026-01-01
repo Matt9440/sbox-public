@@ -103,7 +103,7 @@ internal sealed class RemotePackage : Package
 		Source = p.Source;
 		Public = p.Public;
 		ApiVersion = p.ApiVersion;
-		Screenshots = p.Screenshots?.Select( x => new Screenshot { Created = x.Created, Height = x.Height, IsVideo = x.IsVideo, Thumb = x.Thumb, Url = x.Url, Width = x.Width } ).ToArray() ?? Array.Empty<Screenshot>();
+		Screenshots = p.Screenshots?.Select( x => new Screenshot { Created = x.Created, Height = x.Height, IsVideo = x.IsVideo, Thumb = x.Thumb, Url = x.Url, Width = x.Width } ).Reverse().ToArray() ?? Array.Empty<Screenshot>();
 		TypeName = p.TypeName;
 		PackageReferences = p.PackageReferences;
 		EditorReferences = p.EditorReferences;
