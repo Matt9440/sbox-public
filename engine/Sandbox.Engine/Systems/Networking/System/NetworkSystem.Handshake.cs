@@ -398,13 +398,13 @@ internal partial class NetworkSystem
 		source.SendMessage( output );
 	}
 
-	Task On_Handshake_ClientReady( ClientReady msg, Connection source, Guid msgId )
+	async Task On_Handshake_ClientReady( ClientReady msg, Connection source, Guid msgId )
 	{
 		if ( source.IsHost )
-			return Task.CompletedTask;
+			return;
 
 		if ( msg.HandshakeId != source.HandshakeId )
-			return Task.CompletedTask;
+			return;
 
 		Log.Trace( $"[{this}] Client is ready" );
 
@@ -412,8 +412,15 @@ internal partial class NetworkSystem
 		{
 			source.Kick( $"Invalid Handshake State {source.State}" );
 			Log.Info( $"Kicking {source.DisplayName} [{source.SteamId}] Invalid Handshake State {source.State}" );
-			return Task.CompletedTask;
+			return;
 		}
+
+		//
+		// Make sure we have the player's display name cached before triggering OnActive.
+		// Without this, non-friend players would show as "Unknown Player" because Steam
+		// hasn't fetched their persona name yet.
+		//
+		await source.FriendInfo.RequestInfoAsync();
 
 		source.State = Connection.ChannelState.Connected;
 
@@ -428,8 +435,6 @@ internal partial class NetworkSystem
 		source.SendMessage( output );
 
 		Log.Info( $"{source.DisplayName} [{source.SteamId}] is connected" );
-
-		return Task.CompletedTask;
 	}
 
 	Task On_Handshake_Restart( RestartHandshakeMsg msg, Connection source, Guid msgId )
